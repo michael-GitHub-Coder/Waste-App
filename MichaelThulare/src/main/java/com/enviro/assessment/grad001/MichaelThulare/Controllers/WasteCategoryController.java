@@ -28,9 +28,13 @@ public class WasteCategoryController {
     }
 
     @PostMapping("/{categoryId}/guidelines")
-    public DisposalGuideline addDisposalGuideline(@PathVariable Long categoryId,
-                                                  @RequestBody DisposalGuideline guideline) {
+    public DisposalGuideline addDisposalGuideline(@PathVariable Long categoryId, @RequestBody DisposalGuideline guideline) {
         return wasteCategoryService.addDisposalGuideline(categoryId, guideline);
+    }
+
+    @GetMapping("/guidelines")
+    public List<DisposalGuideline> getAllGuidelines(){
+        return wasteCategoryService.getAllGuildlines();
     }
 
     @PostMapping("/{categoryId}/tips")

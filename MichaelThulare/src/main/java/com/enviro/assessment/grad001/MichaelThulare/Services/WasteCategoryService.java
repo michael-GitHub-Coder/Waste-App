@@ -1,8 +1,6 @@
 package com.enviro.assessment.grad001.MichaelThulare.Services;
 
-import com.enviro.assessment.grad001.MichaelThulare.Models.DisposalGuideline;
-import com.enviro.assessment.grad001.MichaelThulare.Models.RecyclingTip;
-import com.enviro.assessment.grad001.MichaelThulare.Models.WasteCategory;
+import com.enviro.assessment.grad001.MichaelThulare.Models.*;
 import com.enviro.assessment.grad001.MichaelThulare.Repository.DisposalGuidelineRepository;
 import com.enviro.assessment.grad001.MichaelThulare.Repository.RecyclingTipRepository;
 import com.enviro.assessment.grad001.MichaelThulare.Repository.WasteCategoryRepository;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WasteCategoryService {
@@ -36,6 +35,7 @@ public class WasteCategoryService {
         return disposalGuidelineRepository.save(guideline);
     }
 
+
     // Add a new RecyclingTip to a category
     public RecyclingTip addRecyclingTip(Long categoryId, RecyclingTip tip) {
         WasteCategory category = wasteCategoryRepository.findById(categoryId)
@@ -48,4 +48,11 @@ public class WasteCategoryService {
     public List<WasteCategory> getAllCategories() {
         return wasteCategoryRepository.findAll();
     }
+
+    //Get all Guidlines
+    public List<DisposalGuideline> getAllGuildlines() {
+        return disposalGuidelineRepository.findAll();
+    }
+
+
 }
