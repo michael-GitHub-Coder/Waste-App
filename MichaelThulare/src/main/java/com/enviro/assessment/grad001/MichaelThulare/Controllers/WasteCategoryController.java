@@ -5,6 +5,7 @@ import com.enviro.assessment.grad001.MichaelThulare.Models.RecyclingTip;
 import com.enviro.assessment.grad001.MichaelThulare.Models.WasteCategory;
 import com.enviro.assessment.grad001.MichaelThulare.Services.WasteCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,4 +72,12 @@ public class WasteCategoryController {
             return ResponseEntity.status(404).body(null);
         }
     }
+
+
+    @DeleteMapping("/delete/{tipId}")
+    public ResponseEntity<String> deleteById(@PathVariable Long tipId){
+        wasteCategoryService.deleteRecyclingTip(tipId);
+        return new ResponseEntity<>(" was successfully deleted! ", HttpStatus.OK);
+    }
+
 }
