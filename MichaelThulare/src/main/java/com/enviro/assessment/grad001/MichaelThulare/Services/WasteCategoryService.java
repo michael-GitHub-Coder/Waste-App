@@ -37,6 +37,20 @@ public class WasteCategoryService {
         return disposalGuidelineRepository.save(guideline); // Saves the guideline to the repository.
     }
 
+    public DisposalGuideline updateDisposalGuideline(Long disposalId, DisposalGuideline updatedGuideline) {
+        // Fetch the existing guideline
+        DisposalGuideline existingGuideline = disposalGuidelineRepository.findById(disposalId)
+                .orElseThrow(() -> new RuntimeException("Guideline not found"));
+
+        // Update the fields of the existing guideline with the new values
+        if (updatedGuideline.getGuideline() != null) {
+            existingGuideline.setGuideline(updatedGuideline.getGuideline());
+        }
+
+        // Save and return the updated entity
+        return disposalGuidelineRepository.save(existingGuideline);
+    }
+
     // Method to add a new RecyclingTip to a specific WasteCategory
     public RecyclingTip addRecyclingTip(Long categoryId, RecyclingTip tip) {
         // Fetches the WasteCategory by its ID, throws exception if not found
@@ -46,6 +60,26 @@ public class WasteCategoryService {
         return recyclingTipRepository.save(tip); // Saves the recycling tip to the repository.
     }
 
+    public void deleteRecyclingTip(Long recyclingId) {
+        // Find the existing tip by ID or throw an exception if not found
+        RecyclingTip existingRecyclingTip = recyclingTipRepository.findById(recyclingId)
+                .orElseThrow(() -> new RuntimeException("Tip not found"));
+
+        // Delete the existing tip
+        recyclingTipRepository.delete(existingRecyclingTip);
+    }
+
+    public RecyclingTip updateRecyclingTip(Long recylcingId, RecyclingTip updateTip){
+
+        RecyclingTip existingRecyclingTip = recyclingTipRepository.findById(recylcingId)
+                .orElseThrow(() -> new RuntimeException(("Tip not found")));
+
+        if(updateTip.getTip() != null){
+            existingRecyclingTip.setTip(updateTip.getTip());
+        }
+
+        return recyclingTipRepository.save(existingRecyclingTip);
+    }
     // Method to get all WasteCategories with their associated guidelines and tips
     public List<WasteCategory> getAllCategories() {
         return wasteCategoryRepository.findAll(); // Retrieves all WasteCategories from the repository.

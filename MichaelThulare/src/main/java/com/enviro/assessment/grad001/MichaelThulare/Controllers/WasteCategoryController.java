@@ -41,6 +41,16 @@ public class WasteCategoryController {
         }
     }
 
+    @PutMapping("/{disposalId}/guidelines")
+    public ResponseEntity<DisposalGuideline> updateDisposal(@PathVariable Long disposalId, @RequestBody DisposalGuideline guideline){
+        try{
+            DisposalGuideline updatedGuideline = wasteCategoryService.updateDisposalGuideline(disposalId,guideline);
+            return ResponseEntity.ok(updatedGuideline);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
     // Add Recycling Tip to a specific category
     @PostMapping("/{categoryId}/tips")  // This method will be triggered for POST requests
     public ResponseEntity<RecyclingTip> addRecyclingTip(@PathVariable Long categoryId, @RequestBody RecyclingTip tip) {
@@ -49,6 +59,16 @@ public class WasteCategoryController {
             return ResponseEntity.ok(addedTip);  // Returns the added recycling tip with an HTTP 200 status
         } catch (Exception e) {
             return ResponseEntity.status(404).body(null);  // If category is not found, returns an HTTP 404 status with a null response body
+        }
+    }
+
+    @PutMapping("/{tipId}/tips")
+    public ResponseEntity<RecyclingTip> updateRecyclingTip(@PathVariable Long tipId,@RequestBody RecyclingTip tip){
+        try{
+            RecyclingTip updateTip = wasteCategoryService.updateRecyclingTip(tipId,tip);
+            return ResponseEntity.ok(updateTip);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(null);
         }
     }
 }
