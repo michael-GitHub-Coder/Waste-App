@@ -1,5 +1,6 @@
 package com.enviro.assessment.grad001.MichaelThulare.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 
@@ -18,9 +19,11 @@ public class WasteCategory {
 
     private String description;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "wasteCategory", cascade = CascadeType.ALL)
     private List<DisposalGuideline> disposalGuidelines;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "wasteCategory", cascade = CascadeType.ALL)
     private List<RecyclingTip> recyclingTips;
 

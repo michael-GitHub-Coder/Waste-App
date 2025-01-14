@@ -1,5 +1,6 @@
 package com.enviro.assessment.grad001.MichaelThulare.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 
@@ -13,6 +14,7 @@ public class DisposalGuideline {
     @Column(nullable = false)
     private String guideline;
 //, nullable = false
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private WasteCategory wasteCategory;
