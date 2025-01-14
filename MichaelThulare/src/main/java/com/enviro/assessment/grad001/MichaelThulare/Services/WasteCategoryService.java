@@ -51,10 +51,4 @@ public class WasteCategoryService {
         return wasteCategoryRepository.findAll();
     }
 
-    //Get all Guidelines
-    public List<DisposalGuideline> getAllGuildlines() {
-        return disposalGuidelineRepository.findAll();
-    }
-
-
 }

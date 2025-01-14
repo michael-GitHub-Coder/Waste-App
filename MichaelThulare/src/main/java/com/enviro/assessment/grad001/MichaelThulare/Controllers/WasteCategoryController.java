@@ -41,12 +41,6 @@ public class WasteCategoryController {
         }
     }
 
-    // Get all guidelines
-    @GetMapping("/guidelines")
-    public List<DisposalGuideline> getAllGuidelines(){
-        return wasteCategoryService.getAllGuildlines(); // Fixed typo here
-    }
-
     // Add Recycling Tip to a specific category
     @PostMapping("/{categoryId}/tips")
     public ResponseEntity<RecyclingTip> addRecyclingTip(@PathVariable Long categoryId, @RequestBody RecyclingTip tip) {
