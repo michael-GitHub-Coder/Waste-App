@@ -47,4 +47,6 @@ public class DisposalGuideline {
     public void setGuideline(String guideline) {
         this.guideline = guideline;
     }
+
+
 }
