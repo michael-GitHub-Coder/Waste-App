@@ -30,7 +30,6 @@ public class WasteCategoryService {
     }
 
     // Add a new DisposalGuideline to a category
-    @Transactional
     public DisposalGuideline addDisposalGuideline(Long categoryId, DisposalGuideline guideline) {
         WasteCategory category = wasteCategoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
@@ -40,7 +39,6 @@ public class WasteCategoryService {
 
 
     // Add a new RecyclingTip to a category
-    @Transactional
     public RecyclingTip addRecyclingTip(Long categoryId, RecyclingTip tip) {
         WasteCategory category = wasteCategoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
@@ -53,7 +51,7 @@ public class WasteCategoryService {
         return wasteCategoryRepository.findAll();
     }
 
-    //Get all Guidlines
+    //Get all Guidelines
     public List<DisposalGuideline> getAllGuildlines() {
         return disposalGuidelineRepository.findAll();
     }
