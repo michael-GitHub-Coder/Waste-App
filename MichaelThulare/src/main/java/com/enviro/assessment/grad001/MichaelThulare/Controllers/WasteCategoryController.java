@@ -74,10 +74,20 @@ public class WasteCategoryController {
     }
 
 
-    @DeleteMapping("/delete/{tipId}")
+    @DeleteMapping("/tip/delete/{tipId}")
     public ResponseEntity<String> deleteById(@PathVariable Long tipId){
         wasteCategoryService.deleteRecyclingTip(tipId);
         return new ResponseEntity<>(" was successfully deleted! ", HttpStatus.OK);
     }
 
+    @DeleteMapping("/category/delete/{categoryId}")
+    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId){
+        wasteCategoryService.deleteWasteCategory(categoryId);
+        return new ResponseEntity<>("category was successfully deleted! ", HttpStatus.OK);
+    }
+    @DeleteMapping("/guideline/delete/{guidelineId}")
+    public  ResponseEntity<String> deleteGuideline(@PathVariable Long guidelineId){
+        wasteCategoryService.deleteGuideline(guidelineId);
+        return new ResponseEntity<>("Guideline was successfully deleted! ", HttpStatus.OK);
+    }
 }

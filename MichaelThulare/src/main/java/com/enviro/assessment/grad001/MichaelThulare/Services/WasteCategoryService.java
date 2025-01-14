@@ -69,6 +69,22 @@ public class WasteCategoryService {
         recyclingTipRepository.delete(existingRecyclingTip);
     }
 
+    public void deleteWasteCategory(Long categoryId) {
+        // Find the WasteCategory by ID or throw an exception if not found
+        WasteCategory existingWasteCategory = wasteCategoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Waste Category not found"));
+
+        // Delete the WasteCategory; related RecyclingTips will be deleted automatically
+        wasteCategoryRepository.delete(existingWasteCategory);
+    }
+
+    public void deleteGuideline(Long guidelineId){
+        DisposalGuideline existingDisposalguideline = disposalGuidelineRepository.findById(guidelineId)
+                .orElseThrow(() -> new RuntimeException("Dispoasl Guideline not found"));
+
+        disposalGuidelineRepository.delete(existingDisposalguideline);
+    }
+
     public RecyclingTip updateRecyclingTip(Long recylcingId, RecyclingTip updateTip){
 
         RecyclingTip existingRecyclingTip = recyclingTipRepository.findById(recylcingId)

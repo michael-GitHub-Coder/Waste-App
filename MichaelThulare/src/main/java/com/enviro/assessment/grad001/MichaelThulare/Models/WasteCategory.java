@@ -19,13 +19,13 @@ public class WasteCategory {
     private String description;
 
     @JsonManagedReference  // Indicates that this is the "parent" side of the relationship and helps manage circular references during JSON serialization
-    @OneToMany(mappedBy = "wasteCategory", cascade = CascadeType.ALL)  // Defines a one-to-many relationship between WasteCategory and DisposalGuideline
+    @OneToMany(mappedBy = "wasteCategory", cascade = CascadeType.ALL, orphanRemoval = true)  // Defines a one-to-many relationship between WasteCategory and DisposalGuideline
 // 'mappedBy' refers to the field in the DisposalGuideline entity that owns the relationship (wasteCategory)
 // 'cascade = CascadeType.ALL' means that operations (e.g., persist, delete) on WasteCategory will be cascaded to associated DisposalGuidelines
     private List<DisposalGuideline> disposalGuidelines;
 
     @JsonManagedReference  // Same as above for recyclingTips field
-    @OneToMany(mappedBy = "wasteCategory", cascade = CascadeType.ALL)  // Defines a one-to-many relationship between WasteCategory and RecyclingTip
+    @OneToMany(mappedBy = "wasteCategory", cascade = CascadeType.ALL, orphanRemoval = true)  // Defines a one-to-many relationship between WasteCategory and RecyclingTip
     private List<RecyclingTip> recyclingTips;
 
 
