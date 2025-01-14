@@ -1,11 +1,9 @@
 package com.enviro.assessment.grad001.MichaelThulare.Controllers;
 
-import com.enviro.assessment.grad001.MichaelThulare.DTO.WasteCategoryDTO;
 import com.enviro.assessment.grad001.MichaelThulare.Models.DisposalGuideline;
 import com.enviro.assessment.grad001.MichaelThulare.Models.RecyclingTip;
 import com.enviro.assessment.grad001.MichaelThulare.Models.WasteCategory;
 import com.enviro.assessment.grad001.MichaelThulare.Services.WasteCategoryService;
-import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
