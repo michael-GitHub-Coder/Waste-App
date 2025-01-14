@@ -9,46 +9,45 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
+@Service // Marks this class as a service component, indicating it's a service layer responsible for business logic.
 public class WasteCategoryService {
 
-    @Autowired
+    @Autowired // Injects the WasteCategoryRepository dependency into the service.
     private WasteCategoryRepository wasteCategoryRepository;
 
-    @Autowired
+    @Autowired // Injects the DisposalGuidelineRepository dependency into the service.
     private DisposalGuidelineRepository disposalGuidelineRepository;
 
-    @Autowired
+    @Autowired // Injects the RecyclingTipRepository dependency into the service.
     private RecyclingTipRepository recyclingTipRepository;
 
 
-    // Add a new WasteCategory
+    // Method to add a new WasteCategory
     public WasteCategory addWasteCategory(WasteCategory category) {
-        return wasteCategoryRepository.save(category);
+        return wasteCategoryRepository.save(category); // Saves the category to the repository.
     }
 
-    // Add a new DisposalGuideline to a category
+    // Method to add a new DisposalGuideline to a specific WasteCategory
     public DisposalGuideline addDisposalGuideline(Long categoryId, DisposalGuideline guideline) {
+        // Fetches the WasteCategory by its ID, throws exception if not found
         WasteCategory category = wasteCategoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
-        guideline.setWasteCategory(category);
-        return disposalGuidelineRepository.save(guideline);
+        guideline.setWasteCategory(category); // Sets the category for the guideline.
+        return disposalGuidelineRepository.save(guideline); // Saves the guideline to the repository.
     }
 
-
-    // Add a new RecyclingTip to a category
+    // Method to add a new RecyclingTip to a specific WasteCategory
     public RecyclingTip addRecyclingTip(Long categoryId, RecyclingTip tip) {
+        // Fetches the WasteCategory by its ID, throws exception if not found
         WasteCategory category = wasteCategoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
-        tip.setWasteCategory(category);
-        return recyclingTipRepository.save(tip);
+        tip.setWasteCategory(category); // Sets the category for the recycling tip.
+        return recyclingTipRepository.save(tip); // Saves the recycling tip to the repository.
     }
 
-    // Get all categories with related guidelines and tips
+    // Method to get all WasteCategories with their associated guidelines and tips
     public List<WasteCategory> getAllCategories() {
-        return wasteCategoryRepository.findAll();
+        return wasteCategoryRepository.findAll(); // Retrieves all WasteCategories from the repository.
     }
-
 }

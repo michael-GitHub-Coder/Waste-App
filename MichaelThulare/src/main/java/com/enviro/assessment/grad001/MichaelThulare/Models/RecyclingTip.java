@@ -3,42 +3,47 @@ package com.enviro.assessment.grad001.MichaelThulare.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-@Entity
+@Entity // This annotation indicates that this class is an entity, which means it will be mapped to a database table.
 public class RecyclingTip {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id // This annotation marks the field as the primary key for the entity.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // The value will be automatically generated (auto-incremented).
+    private Long id; // Unique identifier for each RecyclingTip entry.
 
-    @Column(nullable = false)
-    private String tip;
+    @Column(nullable = false) // Specifies that this field cannot be null in the database.
+    private String tip; // The recycling tip message.
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private WasteCategory wasteCategory;
+    @JsonBackReference // Prevents infinite recursion during serialization, as this is a bidirectional relationship.
+    @ManyToOne // Indicates that many RecyclingTip entities can be related to one WasteCategory.
+    @JoinColumn(name = "category_id", nullable = false) // Specifies the foreign key column in the database table.
+    private WasteCategory wasteCategory; // The related waste category to which the recycling tip belongs.
 
-    // Getters and setters
+    // Getter for 'id'
     public Long getId() {
         return id;
     }
 
+    // Setter for 'id'
     public void setId(Long id) {
         this.id = id;
     }
 
+    // Getter for 'tip'
     public String getTip() {
         return tip;
     }
 
+    // Setter for 'tip'
     public void setTip(String tip) {
         this.tip = tip;
     }
 
+    // Getter for 'wasteCategory'
     public WasteCategory getWasteCategory() {
         return wasteCategory;
     }
 
+    // Setter for 'wasteCategory'
     public void setWasteCategory(WasteCategory wasteCategory) {
         this.wasteCategory = wasteCategory;
     }
