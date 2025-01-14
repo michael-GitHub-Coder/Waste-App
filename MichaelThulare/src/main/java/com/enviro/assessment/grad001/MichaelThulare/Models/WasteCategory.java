@@ -1,15 +1,19 @@
 package com.enviro.assessment.grad001.MichaelThulare.Models;
 
 import jakarta.persistence.*;
+
+
 import java.util.List;
 
 @Entity
 public class WasteCategory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
+//    @Size(min = 1, max = 100)
     private String name;
 
     private String description;
@@ -21,6 +25,7 @@ public class WasteCategory {
     private List<RecyclingTip> recyclingTips;
 
     // Getters and setters
+
     public Long getId() {
         return id;
     }

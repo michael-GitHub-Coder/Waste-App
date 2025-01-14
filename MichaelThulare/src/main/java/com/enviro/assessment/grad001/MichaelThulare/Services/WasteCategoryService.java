@@ -6,6 +6,7 @@ import com.enviro.assessment.grad001.MichaelThulare.Repository.RecyclingTipRepos
 import com.enviro.assessment.grad001.MichaelThulare.Repository.WasteCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,12 +23,14 @@ public class WasteCategoryService {
     @Autowired
     private RecyclingTipRepository recyclingTipRepository;
 
+
     // Add a new WasteCategory
     public WasteCategory addWasteCategory(WasteCategory category) {
         return wasteCategoryRepository.save(category);
     }
 
     // Add a new DisposalGuideline to a category
+    @Transactional
     public DisposalGuideline addDisposalGuideline(Long categoryId, DisposalGuideline guideline) {
         WasteCategory category = wasteCategoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
@@ -37,6 +40,7 @@ public class WasteCategoryService {
 
 
     // Add a new RecyclingTip to a category
+    @Transactional
     public RecyclingTip addRecyclingTip(Long categoryId, RecyclingTip tip) {
         WasteCategory category = wasteCategoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
