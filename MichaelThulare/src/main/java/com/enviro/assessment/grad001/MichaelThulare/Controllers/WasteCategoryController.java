@@ -73,7 +73,6 @@ public class WasteCategoryController {
         }
     }
 
-
     @DeleteMapping("/tip/delete/{tipId}")
     public ResponseEntity<String> deleteById(@PathVariable Long tipId){
         wasteCategoryService.deleteRecyclingTip(tipId);
