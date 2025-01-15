@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")  // Base URL for all API requests in this controller
+@CrossOrigin(origins = "http://localhost:5174")
 public class WasteCategoryController {
 
     @Autowired //dependency injection
