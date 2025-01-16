@@ -5,89 +5,113 @@ import com.enviro.assessment.grad001.MichaelThulare.Models.RecyclingTip;
 import com.enviro.assessment.grad001.MichaelThulare.Models.WasteCategory;
 import com.enviro.assessment.grad001.MichaelThulare.Services.WasteCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")  // Base URL for all API requests in this controller
-@CrossOrigin(origins = "http://localhost:5174")
+@RequestMapping("/api/categories")
+@CrossOrigin(origins = "http://localhost:5173")
 public class WasteCategoryController {
 
-    @Autowired //dependency injection
-    private WasteCategoryService wasteCategoryService;  // Injecting the WasteCategoryService to handle business logic
+    @Autowired
+    private WasteCategoryService wasteCategoryService;
 
-    // Get all categories
-    @GetMapping  // This method will be triggered for GET requests to "/api/categories"
+    @GetMapping
     public List<WasteCategory> getAllCategories() {
-        return wasteCategoryService.getAllCategories();  // Returns a list of all WasteCategory objects
+        return wasteCategoryService.getAllCategories();
     }
 
-    // Add a new WasteCategory
-    @PostMapping  // This method will be triggered for POST requests
+    @GetMapping("/guidelines")
+    public List<DisposalGuideline> getAllDisposalGuideline() {
+        return wasteCategoryService.getAllDisposalGuideline();
+    }
+
+    @GetMapping("/tips")
+    public List<RecyclingTip> getAllRecyclingTip() {
+        return wasteCategoryService.getAllRecyclingTip();
+    }
+
+    @PostMapping
     public ResponseEntity<WasteCategory> addWasteCategory(@RequestBody WasteCategory category) {
-        WasteCategory createdCategory = wasteCategoryService.addWasteCategory(category);  // Adds the category to the system
-        return ResponseEntity.ok(createdCategory);  // Returns the created category in the response with an HTTP 200 status
+        WasteCategory createdCategory = wasteCategoryService.addWasteCategory(category);
+        return ResponseEntity.ok(createdCategory);
     }
 
-    // Add Disposal Guideline to a specific category
-    @PostMapping("/{categoryId}/guidelines")  // This method will be triggered for POST requests
+    @PostMapping("/{categoryId}/guidelines")
     public ResponseEntity<DisposalGuideline> addDisposalGuideline(@PathVariable Long categoryId, @RequestBody DisposalGuideline guideline) {
         try {
-            DisposalGuideline addedGuideline = wasteCategoryService.addDisposalGuideline(categoryId, guideline);  // Adds a disposal guideline to the specified category
-            return ResponseEntity.ok(addedGuideline);  // Returns the added disposal guideline with an HTTP 200 status
+            DisposalGuideline addedGuideline = wasteCategoryService.addDisposalGuideline(categoryId, guideline);
+            return ResponseEntity.ok(addedGuideline);
         } catch (Exception e) {
-            return ResponseEntity.status(404).body(null);  // If category is not found, returns an HTTP 404 status with a null response body
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{categoryId}/tips")
+    public ResponseEntity<RecyclingTip> addRecyclingTip(@PathVariable Long categoryId, @RequestBody RecyclingTip tip) {
+        try {
+            RecyclingTip addedTip = wasteCategoryService.addRecyclingTip(categoryId, tip);
+            return ResponseEntity.ok(addedTip);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{disposalId}/guidelines")
-    public ResponseEntity<DisposalGuideline> updateDisposal(@PathVariable Long disposalId, @RequestBody DisposalGuideline guideline){
-        try{
-            DisposalGuideline updatedGuideline = wasteCategoryService.updateDisposalGuideline(disposalId,guideline);
+    public ResponseEntity<DisposalGuideline> updateDisposal(@PathVariable Long disposalId, @RequestBody DisposalGuideline guideline) {
+        try {
+            DisposalGuideline updatedGuideline = wasteCategoryService.updateDisposalGuideline(disposalId, guideline);
             return ResponseEntity.ok(updatedGuideline);
         } catch (Exception e) {
-            return ResponseEntity.status(404).body(null);
-        }
-    }
-
-    // Add Recycling Tip to a specific category
-    @PostMapping("/{categoryId}/tips")  // This method will be triggered for POST requests
-    public ResponseEntity<RecyclingTip> addRecyclingTip(@PathVariable Long categoryId, @RequestBody RecyclingTip tip) {
-        try {
-            RecyclingTip addedTip = wasteCategoryService.addRecyclingTip(categoryId, tip);  // Adds a recycling tip to the specified category
-            return ResponseEntity.ok(addedTip);  // Returns the added recycling tip with an HTTP 200 status
-        } catch (Exception e) {
-            return ResponseEntity.status(404).body(null);  // If category is not found, returns an HTTP 404 status with a null response body
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{tipId}/tips")
-    public ResponseEntity<RecyclingTip> updateRecyclingTip(@PathVariable Long tipId,@RequestBody RecyclingTip tip){
-        try{
-            RecyclingTip updateTip = wasteCategoryService.updateRecyclingTip(tipId,tip);
-            return ResponseEntity.ok(updateTip);
+    public ResponseEntity<RecyclingTip> updateRecyclingTip(@PathVariable Long tipId, @RequestBody RecyclingTip tip) {
+        try {
+            RecyclingTip updatedTip = wasteCategoryService.updateRecyclingTip(tipId, tip);
+            return ResponseEntity.ok(updatedTip);
         } catch (Exception e) {
-            return ResponseEntity.status(404).body(null);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/tip/delete/{tipId}")
-    public ResponseEntity<String> deleteById(@PathVariable Long tipId){
+    public ResponseEntity<String> deleteById(@PathVariable Long tipId) {
         wasteCategoryService.deleteRecyclingTip(tipId);
-        return new ResponseEntity<>(" was successfully deleted! ", HttpStatus.OK);
+        return ResponseEntity.ok("Tip was successfully deleted!");
     }
 
     @DeleteMapping("/category/delete/{categoryId}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId){
+    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
         wasteCategoryService.deleteWasteCategory(categoryId);
-        return new ResponseEntity<>("category was successfully deleted! ", HttpStatus.OK);
+        return ResponseEntity.ok("Category was successfully deleted!");
     }
+
     @DeleteMapping("/guideline/delete/{guidelineId}")
-    public  ResponseEntity<String> deleteGuideline(@PathVariable Long guidelineId){
+    public ResponseEntity<String> deleteGuideline(@PathVariable Long guidelineId) {
         wasteCategoryService.deleteGuideline(guidelineId);
-        return new ResponseEntity<>("Guideline was successfully deleted! ", HttpStatus.OK);
+        return ResponseEntity.ok("Guideline was successfully deleted!");
+    }
+
+    @GetMapping("/guidelines/{id}")
+    public ResponseEntity<DisposalGuideline> getGuidelineById(@PathVariable Long id) {
+        return wasteCategoryService.findGuidelineById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/categoryTips/{categoryId}")
+    public ResponseEntity<List<RecyclingTip>> getRecyclingTipsByCategoryId(@PathVariable Long categoryId) {
+        List<RecyclingTip> tips = wasteCategoryService.getRecyclingTipsByCategoryId(categoryId);
+        return ResponseEntity.ok(tips);
+    }
+    @GetMapping("/categoryGuideline/{categoryId}")
+    public ResponseEntity<List<DisposalGuideline>> getGuidelinesByCategoryId(@PathVariable Long categoryId) {
+        List<DisposalGuideline> guidelines = wasteCategoryService.getGuidelinesByCategoryId(categoryId);
+        return ResponseEntity.ok(guidelines);
     }
 }
